@@ -1,8 +1,11 @@
-from PyQt5.QtGui import QFont, QPixmap
+import base64
+
+from PyQt5.QtGui import QFont, QPixmap, QIcon
 from PyQt5.QtWidgets import QSizePolicy, QHBoxLayout, QPushButton, QWidget, QVBoxLayout, QGridLayout, QLabel, QScrollArea
 from PyQt5.QtCore import Qt, QSize, pyqtSignal
 
 from constants import Colour
+from handler import get_thumbnail
 from widgets import Partition
 
 
@@ -30,7 +33,15 @@ class SelectorItem(QWidget):
 
         # Create image button
         self.image_button = QPushButton()
-        self.image_button.setIcon(player.get_icon(fr"C:\Storage\Programming\ContentManager_V3\thumbs\{med_item.code}"))
+        icon = self.player.thumb_cache.get(med_item.code)
+        if icon is None:
+            pixmap = get_thumbnail(self.player, med_item.code)
+            if not pixmap.isNull():
+                icon = QIcon(pixmap)
+                self.player.thumb_cache[med_item.code] = icon
+        if icon is not None:
+            self.image_button.setIcon(icon)
+
         self.image_button.setStyleSheet(f"border: none;")
         self.image_button.clicked.connect(lambda: player.select_media(med_item.code))
         self.image_button.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -94,9 +105,15 @@ class SelectorItem(QWidget):
         """)
 
     def set_icon(self, code):
-        cached_thumb = [thumb for thumb in self.player.thumb_cache if str(code) in thumb][0]
-        self.player.thumb_cache.pop(cached_thumb)
-        self.image_button.setIcon(self.player.get_icon(fr"C:\Storage\Programming\ContentManager_V3\thumbs\{code}"))
+        thumb = get_thumbnail(self.player, code)
+        if not thumb:
+            self.image_button.setIcon(QIcon())
+            return
+
+        icon = QIcon(thumb)
+        self.player.thumb_cache[code] = icon
+        self.image_button.setIcon(icon)
+        self.image_button.setIconSize(self.image_button.size())
 
     def resizeEvent(self, event):
         self.image_button.setFixedHeight(int(self.image_button.width() * 0.562))

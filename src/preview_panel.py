@@ -1,10 +1,11 @@
-from PyQt5.QtGui import QFont
+from PyQt5.QtGui import QFont, QIcon
 from PyQt5.QtMultimedia import QMediaPlayer
 from PyQt5.QtMultimediaWidgets import QVideoWidget
 from PyQt5.QtWidgets import QSizePolicy, QHBoxLayout, QPushButton, QWidget
 from PyQt5.QtCore import Qt, QSize
 
 from constants import Colour
+from handler import get_thumbnail
 from widgets import Partition, ImageWidget, TextWidget
 
 
@@ -127,4 +128,8 @@ class PreviewPanel(Partition):
         else:
             self.label_tags.set_text('')
 
-        self.label_image.set_image(fr"C:\Storage\Programming\ContentManager_V3\thumbs\{selected_media.code}")
+        thumb = get_thumbnail(self.player, selected_media.code)
+        if not thumb:
+            self.image_button.setIcon(QIcon())
+            return
+        self.label_image.set_image(thumb)

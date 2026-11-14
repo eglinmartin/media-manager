@@ -1,9 +1,11 @@
 import argparse
+import base64
 import glob
 import os
 import random
 import shutil
 import sys
+from cgitb import handler
 
 from datetime import datetime
 from PyQt5.QtCore import Qt, QTimer
@@ -13,7 +15,7 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QWidget, QGridLayout, QLa
 
 from browser_panel import BrowserPanel
 from constants import Colour
-from handler import Media, insert_row, load_media_from_json, update_db
+from handler import Media, insert_row, load_media_from_json, update_db, populate_thumbs
 from preview_panel import PreviewPanel
 from selector_panel import SelectorPanel
 
@@ -221,6 +223,7 @@ class MainWindow(QMainWindow):
         self.db_path = db
         self.screen_scale = screen_scale
 
+
         self.min_width = int(screen.size().width())
         self.min_height = int(screen.size().height())
 
@@ -420,8 +423,9 @@ class MainWindow(QMainWindow):
             return
 
         code = self.selected_media.code
-        dest_path = fr"C:\Storage\Programming\ContentManager_V3\thumbs\{code}"
-        shutil.copyfile(src_path, dest_path)
+        with open(src_path, "rb") as f:
+            b64_data = base64.b64encode(f.read()).decode("utf-8")
+            update_db(self, column='Thumb', value=b64_data)
 
         for button in self.selector_panel.selector_buttons:
             if button.med_item.code == code:
@@ -472,6 +476,7 @@ def main():
     parser.add_argument('-s', '--screen_scale', type=str, required=True)
     args = parser.parse_args()
     media = load_media_from_json(args.db_path)
+
     library_name = os.path.basename(args.db_path)
     screen_scale = float(args.screen_scale)
 
