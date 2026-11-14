@@ -210,8 +210,6 @@ class MainWindow(QMainWindow):
         self.setMinimumSize(self.min_width, self.min_height)
         self.showFullScreen()
 
-        self.font_multiplier = self.min_width / 1280
-
         self.thumb_cache = {}
 
         self.selected_media = self.media[0]

@@ -30,22 +30,22 @@ class PreviewPanel(Partition):
         self.layout.addSpacing(10)
 
         # Create title label
-        self.title_font = QFont("Bahnschrift Semibold", int(32 / player.screen_scale))
+        self.title_font = QFont("Bahnschrift Semibold", int(24 / player.screen_scale))
         self.label_title = TextWidget(self, font_col=Colour.WHITE.value, font=self.title_font, alignment=Qt.AlignLeft, back_colour=Colour.GREY3.value, column='Title')
         self.layout.addWidget(self.label_title, alignment=Qt.AlignTop)
 
         # Create director label
-        self.director_font = QFont("Bahnschrift Semibold", int(24 / player.screen_scale))
+        self.director_font = QFont("Bahnschrift Semibold", int(18 / player.screen_scale))
         self.label_director = TextWidget(self, font_col=Colour.WHITE2.value, font=self.director_font, alignment=Qt.AlignLeft, back_colour=Colour.GREY3.value, column='Director')
         self.layout.addWidget(self.label_director, alignment=Qt.AlignTop)
 
         # Create cast label
-        self.cast_font = QFont("Bahnschrift Semibold", int(20 / player.screen_scale))
+        self.cast_font = QFont("Bahnschrift Semibold", int(15 / player.screen_scale))
         self.label_cast = TextWidget(self, font_col=Colour.WHITE3.value, font=self.cast_font, alignment=Qt.AlignLeft, back_colour=Colour.GREY3.value, column='Cast')
         self.layout.addWidget(self.label_cast, alignment=Qt.AlignTop)
 
         # Create tags label
-        self.tags_font = QFont("Bahnschrift Semibold", int(16 / player.screen_scale))
+        self.tags_font = QFont("Bahnschrift Semibold", int(12 / player.screen_scale))
         self.label_tags = TextWidget(self, font_col=Colour.WHITE4.value, font=self.tags_font, alignment=Qt.AlignLeft, back_colour=Colour.GREY3.value, column='Tags')
         self.layout.addWidget(self.label_tags, alignment=Qt.AlignTop)
 

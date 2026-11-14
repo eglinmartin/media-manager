@@ -21,7 +21,7 @@ class SelectorItem(QWidget):
         self.setStyleSheet(f"background-color: {Colour.GREY4.value}")
         self.player = player
         self.med_item = med_item
-        self.height = int(64 / self.player.screen_scale)
+        self.height = int(72 / self.player.screen_scale)
 
         # Create vertical box
         layout = QVBoxLayout(self)
@@ -68,7 +68,7 @@ class SelectorItem(QWidget):
         self.title_label.setCursor(Qt.PointingHandCursor)
 
         # Set font, font size and wrapping
-        self.text_font = QFont("Bahnschrift Semibold", int(14 / screen_scale))
+        self.text_font = QFont("Bahnschrift Semibold", int(11 / screen_scale))
         self.title_label.setFont(self.text_font)
         self.title_label.setWordWrap(True)
         layout.addWidget(self.title_label, alignment=Qt.AlignTop)

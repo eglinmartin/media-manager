@@ -4,11 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="b09d4f8b-2cb0-42f0-8da3-4515a9898862" name="Changes" comment="Refactor colours to constants enum">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="b09d4f8b-2cb0-42f0-8da3-4515a9898862" name="Changes" comment="Refactor colours enum">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/constants.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/constants.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/browser_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/browser_panel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/media_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/media_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/preview_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/preview_panel.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/selector_panel.py" beforeDir="false" afterPath="$PROJECT_DIR$/src/selector_panel.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -24,6 +24,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="master" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -56,13 +61,19 @@
     &quot;Python.Movies.executor&quot;: &quot;Run&quot;,
     &quot;Python.NSFW.executor&quot;: &quot;Run&quot;,
     &quot;Python.contentmanager.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scratch_16.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/archive__media&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Storage/Coding/Games&quot;,
     &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  },
+  &quot;keyToStringList&quot;: {
+    &quot;com.intellij.ide.scratch.ScratchImplUtil$2/New Scratch File&quot;: [
+      &quot;Python&quot;
+    ]
   }
 }</component>
-  <component name="RunManager" selected="Python.Movies">
+  <component name="RunManager" selected="Python.NSFW">
     <configuration name="Movies" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="ContentManager_V3" />
       <option name="ENV_FILES" value="" />
@@ -107,13 +118,38 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="scratch_16" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="ContentManager_V3" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="SDK_NAME" value="Python 3.12 (ContentManager_V3)" />
+      <option name="WORKING_DIRECTORY" value="$APPLICATION_CONFIG_DIR$/scratches" />
+      <option name="IS_MODULE_SDK" value="false" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$APPLICATION_CONFIG_DIR$/scratches/scratch_16.py" />
+      <option name="PARAMETERS" value="C:\Storage\Programming\ContentManager_V3\thumbs C:\Storage\Programming\ContentManager_V3\thumbs_small" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <list>
       <item itemvalue="Python.NSFW" />
       <item itemvalue="Python.Movies" />
+      <item itemvalue="Python.scratch_16" />
     </list>
     <recent_temporary>
       <list>
         <item itemvalue="Python.Movies" />
+        <item itemvalue="Python.scratch_16" />
       </list>
     </recent_temporary>
   </component>
@@ -365,7 +401,31 @@
       <option name="project" value="LOCAL" />
       <updated>1764095508022</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="Small edits, nothing much">
+      <option name="closed" value="true" />
+      <created>1764116113318</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1764116113318</updated>
+    </task>
+    <task id="LOCAL-00031" summary="Bug fix: media with apostrophes no longer cause error">
+      <option name="closed" value="true" />
+      <created>1764339116273</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1764339116273</updated>
+    </task>
+    <task id="LOCAL-00032" summary="Refactor colours enum">
+      <option name="closed" value="true" />
+      <created>1778080768438</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1778080768438</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -373,16 +433,25 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/feature/archive_media" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Add placeholder buttons to preview panel" />
-    <MESSAGE value="Add placeholder media with basic shuffle / next / previous function" />
-    <MESSAGE value="Add basic selector menu (no scrolling)" />
     <MESSAGE value="Add text to selector menu" />
     <MESSAGE value="Vertical scrolling in selector menu" />
     <MESSAGE value="Adjust selector panel alignment" />
@@ -405,7 +474,10 @@
     <MESSAGE value="Remove add button from top bar" />
     <MESSAGE value="Add current time to top bar" />
     <MESSAGE value="Refactor colours to constants enum" />
-    <option name="LAST_COMMIT_MESSAGE" value="Refactor colours to constants enum" />
+    <MESSAGE value="Small edits, nothing much" />
+    <MESSAGE value="Bug fix: media with apostrophes no longer cause error" />
+    <MESSAGE value="Refactor colours enum" />
+    <option name="LAST_COMMIT_MESSAGE" value="Refactor colours enum" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
