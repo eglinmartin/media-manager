@@ -85,6 +85,11 @@ class PreviewPanel(Partition):
         self.button_favourite.clicked.connect(player.favourite_media)
         self.button_layout.addWidget(self.button_favourite)
 
+        self.button_archive = PlayerButton()
+        self.button_archive.setIcon(player.get_icon(fr"C:\Storage\Programming\ContentManager_V3\bin\icon_archive.png"))
+        self.button_archive.clicked.connect(player.archive_media)
+        self.button_layout.addWidget(self.button_archive)
+
         self.layout.addWidget(self.player_menu)
 
         self.update_panel(player.selected_media)
@@ -99,6 +104,7 @@ class PreviewPanel(Partition):
         self.button_play.setFixedHeight(button_size)
         self.button_next.setFixedHeight(button_size)
         self.button_favourite.setFixedHeight(button_size)
+        self.button_archive.setFixedHeight(button_size)
         self.player_menu.setFixedHeight(button_size + 20)
 
         icon_size = QSize(int(button_size * 0.60), int(button_size * 0.60))
@@ -107,6 +113,7 @@ class PreviewPanel(Partition):
         self.button_play.setIconSize(icon_size)
         self.button_next.setIconSize(icon_size)
         self.button_favourite.setIconSize(icon_size)
+        self.button_archive.setIconSize(icon_size)
 
     def update_panel(self, selected_media):
         self.label_title.set_text(selected_media.title)

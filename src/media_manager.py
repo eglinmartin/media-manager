@@ -1,4 +1,5 @@
 import argparse
+import glob
 import os
 import random
 import shutil
@@ -153,6 +154,22 @@ class BottomBar(QWidget):
         self.button_favourite.clicked.connect(player.toggle_favourites)
         layout.addWidget(self.button_favourite)
 
+        self.button_archive = QPushButton('⨯')
+        self.button_archive.setFont(self.bottom_bar_font)
+        self.button_archive.setStyleSheet(f"color: {Colour.WHITE.value}; background-color: {Colour.RED.value};")
+        self.button_archive.setCursor(Qt.PointingHandCursor)
+        self.button_archive.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.button_archive.clicked.connect(player.toggle_archive)
+        layout.addWidget(self.button_archive)
+
+        self.button_untagged = QPushButton('u')
+        self.button_untagged.setFont(self.bottom_bar_font)
+        self.button_untagged.setStyleSheet(f"color: {Colour.WHITE.value}; background-color: {Colour.RED.value};")
+        self.button_untagged.setCursor(Qt.PointingHandCursor)
+        self.button_untagged.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
+        self.button_untagged.clicked.connect(player.toggle_untagged)
+        layout.addWidget(self.button_untagged)
+
         layout.addStretch()
 
         self.searchbar = QLineEdit()
@@ -187,6 +204,8 @@ class BottomBar(QWidget):
         self.searchbar.setFixedWidth(self.player.preview_panel.label_image.width() - 20 - self.button_add.width())
 
         self.button_favourite.setFixedSize(self.searchbar.height(), self.searchbar.height())
+        self.button_archive.setFixedSize(self.searchbar.height(), self.searchbar.height())
+        self.button_untagged.setFixedSize(self.searchbar.height(), self.searchbar.height())
         self.button_zoom.setFixedSize(self.searchbar.height(), self.searchbar.height())
         self.button_zoom.setIconSize(self.button_zoom.size())
 
@@ -214,6 +233,8 @@ class MainWindow(QMainWindow):
 
         self.selected_media = self.media[0]
         self.favourites_only = False
+        self.archive_only = False
+        self.untagged_only = False
 
         central = QWidget()
         self.setCentralWidget(central)
@@ -265,6 +286,20 @@ class MainWindow(QMainWindow):
 
     def toggle_favourites(self):
         self.favourites_only = not self.favourites_only
+        self.archive_only = False
+        self.untagged_only = False
+        self.filter_media()
+
+    def toggle_archive(self):
+        self.archive_only = not self.archive_only
+        self.favourites_only = False
+        self.untagged_only = False
+        self.filter_media()
+
+    def toggle_untagged(self):
+        self.untagged_only = not self.untagged_only
+        self.archive_only = False
+        self.favourites_only = False
         self.filter_media()
 
     def filter_media(self, filter_item=None, filter_column=None):
@@ -273,10 +308,10 @@ class MainWindow(QMainWindow):
         if filter_item:
             self.filter_item = filter_item
 
-        self.filtered_media = [med for med in self.media]
+        self.filtered_media = [med for med in self.media if not med.archive]
 
         if 'All (' in self.filter_item:
-            self.filtered_media = [med for med in self.media]
+            self.filtered_media = [med for med in self.media if not med.archive]
 
         else:
             if self.filter_column == 'Directors':
@@ -290,7 +325,13 @@ class MainWindow(QMainWindow):
             self.search()
 
         if self.favourites_only:
-            self.filtered_media = [m for m in self.filtered_media if int(m.favourite)]
+            self.filtered_media = [m for m in self.filtered_media if int(m.favourite) and not int(m.archive)]
+
+        if self.archive_only:
+            self.filtered_media = [m for m in self.media if int(m.archive)]
+
+        if self.untagged_only:
+            self.filtered_media = [m for m in self.media if not m.tags and not int(m.archive)]
 
         self.selector_panel.populate_selector()
 
@@ -354,6 +395,22 @@ class MainWindow(QMainWindow):
         update_db(self, column='Favourite', value=str(int(self.selected_media.favourite)))
         self.selector_panel.populate_selector()
 
+    def archive_media(self):
+        """
+        Toggles 'favourite' attribute of selected media
+        """
+        matches = glob.glob(os.path.join(fr"{os.path.dirname(self.db_path)}\Videos", f"{self.selected_media.code}.*"))
+        if matches:
+            src_path = matches[0]
+            file_ext = os.path.splitext(src_path)[1]
+            dest_path = fr"{os.path.dirname(self.db_path)}\Videos\Archive\{self.selected_media.code}{file_ext}"
+            shutil.move(src_path, dest_path)
+
+        self.selected_media.archive = not bool(int(self.selected_media.archive))
+        update_db(self, column='Archive', value='1')
+        self.filtered_media.remove(self.selected_media)
+        self.selector_panel.populate_selector()
+
     def resizeEvent(self, event):
         super().resizeEvent(event)
 
@@ -386,7 +443,7 @@ class MainWindow(QMainWindow):
 
         self.media.append(Media(
             title=file_name, director='Unknown', cast=['Unknown',], code=code,
-            date=datetime.fromisoformat('1900-01-01'), media_type='Video', tags=[], favourite=False)
+            date=datetime.fromisoformat('1900-01-01'), media_type='Video', tags=[], favourite=False, archive=False)
         )
 
         src_path = file_path
