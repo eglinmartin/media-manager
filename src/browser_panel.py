@@ -71,17 +71,17 @@ class BrowserPanel(Partition):
         unique_items = []
 
         if parameter == 'Directors':
-            unique_items = {f'{item.director} ({len([m for m in self.player.media if item.director == m.director])})' for item in self.player.media}
+            unique_items = {f'{item.director} ({len([m for m in self.player.media if item.director == m.director and not m.archive])})' for item in self.player.media}
         if parameter == 'Actors':
-            unique_items = {f'{actor.strip()} ({len([m for m in self.player.media if actor in m.cast])})' for med in self.player.media for actor in (med.cast if med.cast else [])}
+            unique_items = {f'{actor.strip()} ({len([m for m in self.player.media if actor in m.cast and not m.archive])})' for med in self.player.media for actor in (med.cast if med.cast else [])}
         if parameter == 'Tags':
-            unique_items = {f'{tag} ({len([m for m in self.player.media if m.tags and tag[1:] in m.tags])})' for med in self.player.media for tag in (med.tags.split(' ') if med.tags else [])}
+            unique_items = {f'{tag} ({len([m for m in self.player.media if m.tags and tag[1:] in m.tags and not m.archive])})' for med in self.player.media for tag in (med.tags.split(' ') if med.tags else [])}
 
         if self.sort_type == SortType.AtoZ:
             sorted_items = sorted(unique_items)
         elif self.sort_type == SortType.COUNT:
             sorted_items = sorted(unique_items, key=lambda x: (-int(re.search(r'\((\d+)\)', x).group(1)), x))
-        appended_items = [f'All ({len(self.player.media)})'] + sorted_items
+        appended_items = [f'All ({len([m for m in self.player.media if not m.archive])})'] + sorted_items
 
         for item in appended_items:
             self.list_widget.addItem(item)

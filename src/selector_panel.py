@@ -40,16 +40,21 @@ class SelectorItem(QWidget):
         # Create the overlay image label
         self.overlay_label = QLabel(self)
 
-        if not med_item.tags:
-            self.overlay_pixmap = QPixmap(fr"C:\Storage\Programming\ContentManager_V3\bin\overlay_notags.png")
+        if med_item.archive:
+            self.overlay_pixmap = QPixmap(fr"C:\Storage\Programming\ContentManager_V3\bin\overlay_archive.png")
             self.overlay_label.setPixmap(self.overlay_pixmap)
 
-        elif int(med_item.favourite):
-            self.overlay_pixmap = QPixmap(fr"C:\Storage\Programming\ContentManager_V3\bin\overlay_favourite.png")
-            self.overlay_label.setPixmap(self.overlay_pixmap)
         else:
-            self.overlay_pixmap = None
-            self.overlay_label.setPixmap(QPixmap())
+            if not med_item.tags:
+                self.overlay_pixmap = QPixmap(fr"C:\Storage\Programming\ContentManager_V3\bin\overlay_notags.png")
+                self.overlay_label.setPixmap(self.overlay_pixmap)
+
+            elif int(med_item.favourite):
+                self.overlay_pixmap = QPixmap(fr"C:\Storage\Programming\ContentManager_V3\bin\overlay_favourite.png")
+                self.overlay_label.setPixmap(self.overlay_pixmap)
+            else:
+                self.overlay_pixmap = None
+                self.overlay_label.setPixmap(QPixmap())
 
         self.overlay_label.setAlignment(Qt.AlignCenter)
         self.overlay_label.setStyleSheet("background: transparent;")
